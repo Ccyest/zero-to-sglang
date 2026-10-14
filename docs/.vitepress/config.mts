@@ -48,6 +48,7 @@ const chSidebar: DefaultTheme.SidebarItem[] = [
       { text: '第 5 章 HTTP 服务与并发（概念）', link: '/ch/part2/第5章_HTTP服务与并发' },
       { text: '第 5 章 HTTP 服务与并发（代码走读）', link: '/ch/part2/第5章_HTTP服务与并发_代码' },
       { text: '第 6 章 Continuous Batching 与调度', link: '/ch/part2/第6章_ContinuousBatching与调度' },
+      { text: '第 6 章 连续批处理与调度（代码实现）', link: '/ch/part2/第6章_ContinuousBatching与调度_代码' },
       { text: '第 7 章 Paged KV Cache 与显存管理', link: '/ch/part2/第7章_PagedKVCache与显存管理' },
       { text: '第 8 章 RadixAttention 与前缀缓存（概念）', link: '/ch/part2/第8章_RadixAttention与前缀缓存' },
       { text: '第 8 章 RadixAttention 与前缀缓存（代码走读）', link: '/ch/part2/第8章_RadixAttention与前缀缓存_代码' },

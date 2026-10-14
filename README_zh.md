@@ -78,7 +78,7 @@
 | 3. Your First 200 Lines: Forward Pass and Generation | 手写前向传播与自回归生成循环 | 🚧 |
 | 4. KV Cache: From O(n²) to O(n) | 缓存实现与注意力计算优化 | 🚧 |
 | [5. HTTP 服务与并发（概念）](course-material/ch/part2/第5章_HTTP服务与并发.md) · [代码走读](course-material/ch/part2/第5章_HTTP服务与并发_代码.md) | HTTP 基础与请求流程、并发隔离、流式返回与取消的实现 | ✅ |
-| 6. Continuous Batching and the Scheduler | 连续批处理与调度器设计 | 🚧 |
+| [6. Continuous Batching and the Scheduler（概念）](course-material/ch/part2/第6章_ContinuousBatching与调度.md) · [代码实现](course-material/ch/part2/第6章_ContinuousBatching与调度_代码.md) | 用最小调度器理解 FIFO、动态组批与请求结束 | 概念 🚧 / 代码 📝 |
 | 7. Paged KV Cache and Memory Management | 分页 KV Cache 与显存管理 | 🚧 |
 | [8. RadixAttention and Prefix Caching](course-material/ch/part2/第8章_RadixAttention与前缀缓存.md) · [代码走读](course-material/ch/part2/第8章_RadixAttention与前缀缓存_代码.md)  | RadixAttention 与前缀缓存 | ✅ |
 | 9. Multi-process & Tensor Parallelism | 多进程与张量并行 | 🚧 |

@@ -1,0 +1,30 @@
+name: Part II Chapter 6 examples
+
+on:
+  pull_request:
+    paths:
+      - 'examples/part2/chapter06/**'
+      - 'course-material/ch/part2/第6章_ContinuousBatching与调度_代码.md'
+      - '.github/workflows/part2-chapter06.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  correctness:
+    name: Chapter 6 correctness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run example and tests offline
+        env:
+          HF_HUB_OFFLINE: '1'
+          TRANSFORMERS_OFFLINE: '1'
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python examples/part2/chapter06/scheduler.py
+          python -m unittest examples.part2.chapter06.test_scheduler -v
