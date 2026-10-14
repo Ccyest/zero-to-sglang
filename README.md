@@ -79,7 +79,7 @@
 | 3. Your First 200 Lines: Forward Pass and Generation | Hand-writing the forward pass and the autoregressive generation loop | 🚧 |
 | 4. KV Cache: From O(n²) to O(n) | Implementing the cache and optimizing attention computation | 🚧 |
 | [5. HTTP and Concurrent Requests (Concepts)](course-material/eng/part2/Chapter5_HTTP-and-Concurrent-Requests.md) · [Code Walkthrough](course-material/eng/part2/Chapter5_HTTP-and-Concurrent-Requests_code.md) | HTTP basics and request flow; implementing isolation, streaming, and cancellation | ✅ |
-| [6. Continuous Batching and the Scheduler (Concepts)](course-material/eng/part2/Chapter6_Continuous-Batching-and-the-Scheduler.md) · [Code Implementation](course-material/eng/part2/Chapter6_Continuous-Batching-and-the-Scheduler_code.md) | FIFO admission, dynamic batches, and request completion in a minimal scheduler | Concepts 🚧 / Code 📝 |
+| [6. Continuous Batching and the Scheduler (Concepts)](course-material/eng/part2/Chapter6_Continuous-Batching-and-the-Scheduler.md) · [Code Walkthrough](course-material/eng/part2/Chapter6_Continuous-Batching-and-the-Scheduler_code.md) | A source walkthrough of prefill admission, dynamic batches, and request cleanup | Concepts 🚧 / Code 📝 |
 | 7. Paged KV Cache and Memory Management | Paged KV Cache and GPU memory management | 🚧 |
 | [8. RadixAttention and Prefix Caching (Concepts)](course-material/eng/part2/Chapter8_RadixAttention-and-Prefix-Caching.md) · [Code Walkthrough](course-material/eng/part2/Chapter8_RadixAttention-and-Prefix-Caching_code.md)  | RadixAttention and prefix caching | ✅ |
 | 9. Multi-process & Tensor Parallelism | Multi-process execution and tensor parallelism | 🚧 |
