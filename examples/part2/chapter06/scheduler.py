@@ -1,4 +1,4 @@
-"""第 6 章：FIFO + prefill 优先的连续批处理；仅使用 Python 标准库。"""
+"""Chapter 6: FIFO admission and prefill-first continuous batching; standard library only."""
 
 from collections import deque
 from dataclasses import dataclass, field
@@ -20,7 +20,7 @@ class Request:
 
 
 def toy_step(batch, phase):
-    """模拟后端：每条请求返回 (最后一个 token + 1) % 100；没有真实模型或 KV。"""
+    """Toy backend: return (last token + 1) % 100 per request; no real model or KV cache."""
     inputs = [r.prompt if phase == "prefill" else [r.output[-1]] for r in batch]
     return [(tokens[-1] + 1) % 100 for tokens in inputs]
 
@@ -80,7 +80,7 @@ class Scheduler:
         while self.waiting and len(self.running) < self.max_running:
             request = self.waiting[0]
             if len(request.prompt) > budget or self.reserved + request.reservation > self.token_capacity:
-                break  # 严格 FIFO：队首暂时放不下，就等下一轮。
+                break  # Strict FIFO: wait if the first request cannot fit this round.
             self.waiting.popleft()
             self.running.append(request)
             request.state = "running"
@@ -92,7 +92,7 @@ class Scheduler:
         if not batch:
             return None
         try:
-            tokens = self.engine(batch, phase)  # 每轮只调用一次后端接口。
+            tokens = self.engine(batch, phase)  # One backend call per round.
             if len(tokens) != len(batch):
                 raise ValueError("engine must return one token per request")
         except Exception:
@@ -118,7 +118,7 @@ def main():
         phase, batch, reserved = scheduler.step()
         print(f"tick={tick} {phase:7} batch={batch} reserved={reserved}")
         if tick == 0:
-            scheduler.submit("C", [6], 2)  # A/B 已经开始后，新请求才到达。
+            scheduler.submit("C", [6], 2)  # C arrives after A and B have started.
         tick += 1
     for request in scheduler.requests.values():
         print(f"{request.uid}: {request.output} ({request.finish_reason})")

@@ -1,16 +1,16 @@
-# 第 6 章：连续批处理与调度
+# Chapter 6: Continuous Batching and the Scheduler
 
-用最小调度器理解 FIFO、动态组批与请求结束。本目录独立运行，不依赖其他章节示例。
+FIFO admission, dynamic batches, and request completion in a minimal scheduler. This example runs independently of the other chapters.
 
-[阅读中文教程](../../../course-material/ch/part2/第6章_ContinuousBatching与调度_代码.md)
+[English tutorial](../../../course-material/eng/part2/Chapter6_Continuous-Batching-and-the-Scheduler_code.md) · [中文教程](../../../course-material/ch/part2/第6章_ContinuousBatching与调度_代码.md)
 
-在仓库根目录运行，使用 Python 3.12：
+Run from the repository root with Python 3.12:
 
 ```bash
 python examples/part2/chapter06/scheduler.py
 python -m unittest examples.part2.chapter06.test_scheduler -v
 ```
 
-只使用 Python 标准库。后端按固定规则生成整数，模拟批接口；没有神经网络张量批处理或真实 KV 分配。token 容量是逻辑预留，tick 是轮次。
+Uses only the Python standard library. A deterministic integer rule simulates the batch interface; there is no neural-network tensor batch or real KV allocation. Token capacity is a logical reservation, and tick is a round counter.
 
-默认运行和测试均不下载模型、不需要 GPU。
+The default example and tests need no model download or GPU.

@@ -1,1 +1,1 @@
-"""第 6 章：连续批处理与调度。"""
+"""Chapter 6: continuous batching and scheduling."""

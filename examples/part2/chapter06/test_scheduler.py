@@ -1,4 +1,4 @@
-"""验证调度顺序、输出隔离和资源归还；不需要安装第三方依赖。"""
+"""Check scheduling order, output isolation, and capacity release; no third-party packages."""
 
 import unittest
 
@@ -68,10 +68,10 @@ class SchedulerTests(unittest.TestCase):
 
     def test_fifo_does_not_skip_blocked_head(self):
         scheduler = Scheduler(token_capacity=8)
-        scheduler.submit("A", [1], 3)  # 预留 4。
+        scheduler.submit("A", [1], 3)  # Reserves 4 tokens.
         scheduler.step()
-        scheduler.submit("B", [2], 4)  # 需要 5，暂时放不下。
-        scheduler.submit("C", [3], 1)  # 虽然只需要 2，也不能绕过 B。
+        scheduler.submit("B", [2], 4)  # Needs 5 tokens; cannot fit yet.
+        scheduler.submit("C", [3], 1)  # Needs only 2 tokens, but cannot bypass B.
         self.assertEqual(scheduler.step()[1], ["A"])
         scheduler.step()
         self.assertEqual(scheduler.step()[1], ["B", "C"])

@@ -5,6 +5,7 @@ on:
     paths:
       - 'examples/part2/chapter06/**'
       - 'course-material/ch/part2/第6章_ContinuousBatching与调度_代码.md'
+      - 'course-material/eng/part2/Chapter6_Continuous-Batching-and-the-Scheduler_code.md'
       - '.github/workflows/part2-chapter06.yml'
   workflow_dispatch:
 
