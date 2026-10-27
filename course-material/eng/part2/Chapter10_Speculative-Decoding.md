@@ -75,7 +75,7 @@ For three proposals, the target can obtain:
 | $p(\cdot\mid x,y_1,y_2)$ | $x$ plus the first two proposals | Verify $y_3$ |
 | $p(\cdot\mid x,y_1,y_2,y_3)$ | $x$ plus all proposals | Select one more token if all are accepted |
 
-Here, “parallel” means that the forward computation for multiple known input positions can run together. **The second row can contribute to committed output only if $y_1$ is accepted; the third requires both earlier proposals to be accepted.** Computation happens in advance, but verification determines whether its results can be used.
+Here, parallel computation means that the forward computation for multiple known input positions can run together. **The second row can contribute to committed output only if $y_1$ is accepted; the third requires both earlier proposals to be accepted.** Computation happens in advance, but verification determines whether its results can be used.
 
 What makes a proposal pass verification? That depends on the target's original decoding rule. We next consider greedy selection and random sampling.
 
@@ -89,18 +89,17 @@ For readability, the example below uses words as tokens; a real tokenizer does n
 | --- | --- | --- | --- |
 | After `I` | `like` | `like` | Accept |
 | After `I like` | `green` | `black` | Reject `green` and commit the correction `black` |
-| After `I like green` | `tea` | Any choice | Discard the remaining results |
 
-This round appends only `like black`. The next round resumes from `I like black`.
+Once `green` is rejected at the second position, acceptance checking stops immediately. The old proposal `tea` is not checked, and the round appends only `like black`. The next round drafts fresh candidates from `I like black`, which the target then verifies.
 
 <div align="center">
   <img src="./images/10-2-greedy-verification-and-rejection.png" alt="The upper panel accepts like, rejects green and corrects it to black, and discards tea; the lower panel accepts like green tea and selects a period as a bonus token" width="800">
   <p><em>Figure 2. Greedy verification: first rejection versus full acceptance</em></p>
 </div>
 
-Why can the third position not be kept even if it also predicts `tea`? That row answers what follows `I like green`, whereas the actual prefix is now `I like black`. A different prefix may produce a different predictive distribution, so computation must resume from the actual prefix.
+The target has already computed the third prediction in this round's forward pass, but that prediction depends on `I like green`. Rejection invalidates this prefix, so the corresponding prediction is discarded. **Computing predictions in advance does not mean acceptance checking continues past the first rejection.**
 
-What matters is **how many proposals are accepted consecutively from the beginning**, rather than how many candidates seem correct somewhere in the round. With the same numerical computation and tie-breaking rules, greedy verification always commits the token the target would have selected, preserving the sequence produced by target-only greedy decoding.
+What matters is **how many proposals are accepted consecutively from the beginning**; matches after a rejected position cannot count toward the accepted length. With the same numerical computation and tie-breaking rules, greedy verification always commits the token the target would have selected, preserving the sequence produced by target-only greedy decoding.
 
 ### 3.4 Method 2: Sampling-Based Verification—Preserve the Target Distribution
 
@@ -193,7 +192,7 @@ The method trades extra work for less sequential waiting. Whether it is faster d
 ### 5.2 Exercises
 
 1. Why do KV caching, continuous batching, and TP not directly remove the dependency between adjacent tokens in a single request? How does speculative decoding provide inputs for parallel verification?
-2. The draft proposes `like green tea`. The target accepts `like` but corrects `green` to `black`. Why can a later prediction of `tea` not be retained?
+2. The draft proposes `like green tea`. The target accepts `like` but corrects `green` to `black`. Why does the round stop checking the old proposal `tea` and instead require fresh drafting and verification from the new prefix?
 3. Let $p=[0.3,0.7]$ and $q=[0.6,0.4]$. What is each candidate's acceptance probability? Which distribution is used after rejection, and what is the final output distribution?
 4. How do temperature, Top-k, and Top-p relate to the two verification methods? Why does preserving a sampling distribution not imply identical output under the same seed?
 5. Where does the bonus token come from after full acceptance? Can it be appended after the output length limit is reached? Does rejection of a proposed EOS necessarily end the request?
